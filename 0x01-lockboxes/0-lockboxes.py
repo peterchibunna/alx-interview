@@ -13,7 +13,7 @@ def canUnlockAll(boxes):
     keys.extend(boxes[0])
     can_open = []
     for key, box in enumerate(boxes):
-        print(key, keys, box, key in keys)
+        # print(key, keys, box, key in keys)
         if key == 0:
             # keys.extend(box)
             can_open.append(True)
