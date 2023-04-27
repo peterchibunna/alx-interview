@@ -1,3 +1,8 @@
+#!/usr/bin/python3
+"""
+0. Lockboxes
+"""
+
 def canUnlockAll(boxes):
     """Write a method that determines if all the `boxes` can be opened.
     """
