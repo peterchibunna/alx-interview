@@ -16,13 +16,16 @@ def canUnlockAll(boxes):
             keys.extend(box)
             can_open.append(True)
         else:
-            unopened.append({'{}'.format(key): box})
+            unopened.append({key: box})
             can_open.append(False)
     for d in unopened:
         for key in d:
-            if int(key) in keys:
-                can_open.pop(int(key))
+            # if we are now able to open this box
+            if key in keys:
+                # replace the `cannot` status from the prior run
+                # collect more keys from this box now and
+                can_open.pop(key)
                 keys.extend(d[key])
-                can_open.insert(int(key), True)
+                can_open.insert(key, True)
 
     return False if False in can_open else True
