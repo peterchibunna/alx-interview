@@ -3,17 +3,26 @@
 0. Lockboxes
 """
 
+
 def canUnlockAll(boxes):
     """Write a method that determines if all the `boxes` can be opened.
     """
-    n = len(boxes)
-    seen_boxes = set([0])
-    unseen_boxes = set(boxes[0]).difference(set([0]))
-    while len(unseen_boxes) > 0:
-        boxIdx = unseen_boxes.pop()
-        if not boxIdx or boxIdx >= n or boxIdx < 0:
-            continue
-        if boxIdx not in seen_boxes:
-            unseen_boxes = unseen_boxes.union(boxes[boxIdx])
-            seen_boxes.add(boxIdx)
-    return n == len(seen_boxes)
+    keys = [0]  # a set that contains the keys found
+    keys.extend(boxes[0])
+    can_open = []
+    unopened = []
+    for key, box in enumerate(boxes):
+        if key in keys:
+            keys.extend(box)
+            can_open.append(True)
+        else:
+            unopened.append({'{}'.format(key): box})
+            can_open.append(False)
+    for d in unopened:
+        for key in d:
+            if int(key) in keys:
+                can_open.pop(int(key))
+                keys.extend(d[key])
+                can_open.insert(int(key), True)
+
+    return False if False in can_open else True
