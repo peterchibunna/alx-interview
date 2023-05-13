@@ -28,9 +28,10 @@ if __name__ == "__main__":
     line_count = 0
     try:
         while True:
+
             for line in sys.stdin:
                 line_count += 1
-
+                # print(line_count)
                 parts = line.split(' ')
                 if len(parts) == 9:
                     file_size = parts[8]
@@ -39,8 +40,9 @@ if __name__ == "__main__":
                     status_codes[code] += 1
                 if line_count % 10 == 0:
                     print_stats(total_file_size, status_codes)
-            sys.stdin.flush()
-            print_stats(total_file_size, status_codes)
+            # sys.stdin.flush()
+            if line_count % 10 != 0:
+                print_stats(total_file_size, status_codes)
             break
     except (KeyboardInterrupt, EOFError, StopIteration):
         print_stats(total_file_size, status_codes)
