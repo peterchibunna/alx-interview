@@ -49,13 +49,13 @@ if __name__ == "__main__":
                 # if regex_match is not None:
                 #     code = regex_match.group('http_code')
                 #     file_size = int(regex_match.group('response_size'))
-                parts = line.split(' ') # do not use this test again
+                parts = line.split(' ')  # do not use this test again
                 if len(parts) == 9:
                     file_size = parts[8]
-                    total_file_size += int(file_size)
                     code = parts[7]
                     if code in status_codes:
                         status_codes[code] += 1
+                        total_file_size += int(file_size)
                 if line_count % 10 == 0:
                     print_stats(total_file_size, status_codes)
             # sys.stdin.flush()
