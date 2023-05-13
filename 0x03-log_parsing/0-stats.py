@@ -12,7 +12,7 @@ def print_stats(tf_size, s_codes):
     print('File size: {}'.format(tf_size), flush=True)
     for status_code in sorted(s_codes.keys()):
         count = s_codes.get(status_code, 0)
-        if count > 0:
+        if count > 0 and type(count) == int:
             print('{}: {}'.format(status_code, count), flush=True)
 
 
