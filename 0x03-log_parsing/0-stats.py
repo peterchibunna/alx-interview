@@ -53,9 +53,9 @@ if __name__ == "__main__":
                 # if len(parts) == 9:
                 #     file_size = parts[8]
                 #     code = parts[7]
+                    total_file_size += int(file_size)
                     if code in status_codes:
                         status_codes[code] += 1
-                    total_file_size += int(file_size)
                 if line_count % 10 == 0:
                     print_stats(total_file_size, status_codes)
             # sys.stdin.flush()
