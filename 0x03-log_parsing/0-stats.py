@@ -9,9 +9,10 @@ def print_stats(tf_size, s_codes):
     """Print the stats gathered
     """
     print('File size: {}'.format(tf_size), flush=True)
-    for k, v in s_codes.items():
-        if v > 0:
-            print('{}: {}'.format(k, v), flush=True)
+    for status_code in sorted(s_codes.keys()):
+        count = s_codes.get(status_code, 0)
+        if count > 0:
+            print('{}: {}'.format(status_code, count), flush=True)
 
 
 if __name__ == "__main__":
@@ -29,7 +30,6 @@ if __name__ == "__main__":
     line_count = 0
     try:
         while True:
-
             for line in sys.stdin:
                 line_count += 1
                 # print(line_count)
@@ -46,4 +46,6 @@ if __name__ == "__main__":
                 print_stats(total_file_size, status_codes)
             break
     except (KeyboardInterrupt, EOFError, StopIteration):
+        print_stats(total_file_size, status_codes)
+    if line_count == 0:
         print_stats(total_file_size, status_codes)
