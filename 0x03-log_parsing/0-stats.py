@@ -33,5 +33,7 @@ if __name__ == "__main__":
                     for k, v in status_codes.items():
                         print('{}: {}'.format(k, v))
             sys.stdin.flush()
-    except Exception:
-        pass
+    except (KeyboardInterrupt, EOFError):
+        print('File size: {}'.format(total_file_size))
+        for k, v in status_codes.items():
+            print('{}: {}'.format(k, v))
