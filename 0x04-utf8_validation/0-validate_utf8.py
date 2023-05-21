@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 """
-Main module
+Main module: 0x04. UTF-8 Validation
 """
+from typing import List
 
 
-def validUTF8(data):
+def validUTF8(data: List) -> bool:
     """Test if data is a valid utf8 and return True or False
     """
     num_of_bytes = 0
