@@ -13,7 +13,7 @@ def validUTF8(data: List) -> bool:
     """
     num_of_bytes = 0
     for num in data:
-        binary_representation = f'{num:08b}'
+        binary_representation = '{0:08b}'.format(num)
         if num_of_bytes == 0:
             for bit in binary_representation:
                 if bit == '0':
