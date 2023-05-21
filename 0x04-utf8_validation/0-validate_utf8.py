@@ -1,61 +1,35 @@
 #!/usr/bin/python3
-"""UTF-8 validation module.
 """
+Main module:
+0x04. UTF-8 Validation
+"""
+from typing import List, Iterable
 
 
-def validUTF8(data):
-    """Checks if a list of integers are valid UTF-8 codepoints.
-    See <https://datatracker.ietf.org/doc/html/rfc3629#page-4>
+def validUTF8(data: Iterable) -> bool:
+    """Test if data is a valid utf8 and return True or False
+    For each data in the data, convert to binary and test the bits
+    to make sure t
     """
-    skip = 0
-    n = len(data)
-    for i in range(n):
-        if skip > 0:
-            skip -= 1
-            continue
-        if type(data[i]) != int or data[i] < 0 or data[i] > 0x10ffff:
-            return False
-        elif data[i] <= 0x7f:
-            skip = 0
-        elif data[i] & 0b11111000 == 0b11110000:
-            # 4-byte utf-8 character encoding
-            span = 4
-            if n - i >= span:
-                next_body = list(map(
-                    lambda x: x & 0b11000000 == 0b10000000,
-                    data[i + 1: i + span],
-                ))
-                if not all(next_body):
-                    return False
-                skip = span - 1
-            else:
-                return False
-        elif data[i] & 0b11110000 == 0b11100000:
-            # 3-byte utf-8 character encoding
-            span = 3
-            if n - i >= span:
-                next_body = list(map(
-                    lambda x: x & 0b11000000 == 0b10000000,
-                    data[i + 1: i + span],
-                ))
-                if not all(next_body):
-                    return False
-                skip = span - 1
-            else:
-                return False
-        elif data[i] & 0b11100000 == 0b11000000:
-            # 2-byte utf-8 character encoding
-            span = 2
-            if n - i >= span:
-                next_body = list(map(
-                    lambda x: x & 0b11000000 == 0b10000000,
-                    data[i + 1: i + span],
-                ))
-                if not all(next_body):
-                    return False
-                skip = span - 1
-            else:
+    num_of_bytes = 0
+    for num in data:
+        binary_representation = '{0:08b}'.format(num)
+        print(binary_representation)
+        if num_of_bytes == 0:
+            for bit in binary_representation:
+                if bit == '0':
+                    break
+                num_of_bytes = num_of_bytes + 1
+
+            if num_of_bytes == 0:
+                continue
+
+            if num_of_bytes == 1 or num_of_bytes > 4:
                 return False
         else:
-            return False
-    return True
+            if not (binary_representation[0] == '1' and
+                    binary_representation[1] == '0'):
+                return False
+        num_of_bytes = num_of_bytes - 1
+
+    return num_of_bytes == 0
