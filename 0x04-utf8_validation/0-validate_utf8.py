@@ -4,19 +4,19 @@ Module: 0x04. UTF-8 Validation
 """
 
 
-def bin8(x):
-    """converts a number to binary with 8-width padding
-    @source https://stackoverflow.com/a/10411628/849417
-    """
-    return ''.join(reversed([str((x >> i) & 1) for i in range(8)]))
+# def bin8(x):
+#     """converts a number to binary with 8-width padding
+#     @source https://stackoverflow.com/a/10411628/849417
+#     """
+#     return ''.join(reversed([str((x >> i) & 1) for i in range(8)]))
 
 
 def validUTF8(data):
-    """Test that all the datum in `data` is a valid UTF-8 encoding.
+    """Test that all the datum in `data` is a valid UTF-8 encoding
     """
     num_bytes = 0
     for num in data:
-        binary_representation = bin8(num)
+        binary_representation = format(num, '#010b')[-8:]
         if num_bytes == 0:
             for bit in binary_representation:
                 if bit == '0':
