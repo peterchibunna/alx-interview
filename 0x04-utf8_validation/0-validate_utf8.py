@@ -13,8 +13,7 @@ def validUTF8(data: Iterable) -> bool:
     """
     num_of_bytes = 0
     for num in data:
-        binary_representation = '{0:08b}'.format(num)
-        print(binary_representation)
+        binary_representation = format(num, '{0:08b}')
         if num_of_bytes == 0:
             for bit in binary_representation:
                 if bit == '0':
