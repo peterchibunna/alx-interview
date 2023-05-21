@@ -19,6 +19,8 @@ def validUTF8(data):
     for val in data:
         try:
             val.to_bytes(800, 'big').decode('utf8')
-        except (UnicodeDecodeError, Exception):
+        except UnicodeDecodeError:
             can_decode = False
+        except OverflowError:
+            can_decode = True
     return can_decode
