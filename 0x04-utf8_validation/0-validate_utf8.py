@@ -16,16 +16,6 @@ def validUTF8(data):
     """
     Return: True if data is a valid UTF-8 encoding, else return False.
     """
-    # can_decode = True
-    # for val in data:
-    #     try:
-    #         val.to_bytes(800, sys.byteorder).decode('utf8')
-    #     except UnicodeDecodeError:
-    #         can_decode = False
-    #     except OverflowError:
-    #         can_decode = True
-    # return can_decode
-
     n_bytes = 0
     for num in data:
         bin_represent = bin8(num)
@@ -47,3 +37,19 @@ def validUTF8(data):
         n_bytes -= 1
 
     return n_bytes == 0
+
+
+def validUTF82(data):
+    """
+    Return: True if data is a valid UTF-8 encoding, else return False.
+    This method doesn't catch all the tests for ALX
+    """
+    can_decode = True
+    for val in data:
+        try:
+            val.to_bytes(24).decode('utf-8')
+        except UnicodeDecodeError:
+            can_decode = False
+        except OverflowError:
+            can_decode = False
+    return can_decode
