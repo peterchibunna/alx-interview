@@ -3,7 +3,7 @@
 const request = require('request');
 const id = process.argv[2];
 const url = `https://swapi-api.alx-tools.com/api/films/${id}`;
-request(url, function (error, res, body) {
+request.get(url, function (error, res, body) {
   if (error) {
     console.log(error);
   }
@@ -12,7 +12,7 @@ request(url, function (error, res, body) {
 
   data.forEach((o, i) => {
     promises.push(new Promise((resolve, reject) => {
-      return request(o, function (error, res, body1) {
+      return request.get(o, function (error, res, body1) {
         if (error) {
           reject(new Error('Something went wrong'));
         }
