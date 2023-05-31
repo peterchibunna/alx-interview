@@ -8,25 +8,22 @@ request(url, function (error, res, body) {
     console.log(error);
   }
   const data = JSON.parse(body).characters;
-  let promises = [];
-  // we can only use `promise.all` to the rescue to make sure the
-  // responses are in the preserved order
+  const promises = [];
+
   data.forEach((o, i) => {
-    promises.push(
-        new Promise((resolve, reject) => {
-          return request(o, function (error, res, body1) {
-            if (error) {
-              reject('Error');
-            }
-            resolve(JSON.parse(body1).name)
-          });
-        }),
-    );
+    promises.push(new Promise((resolve, reject) => {
+      return request(o, function (error, res, body1) {
+        if (error) {
+          reject(new Error('Something went wrong'));
+        }
+        resolve(JSON.parse(body1).name);
+      });
+    }));
   });
 
   Promise.all(promises).then(data => {
     data.forEach((o) => {
       console.log(o);
-    })
-  })
+    });
+  });
 });
