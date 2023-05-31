@@ -2,20 +2,31 @@
 
 const request = require('request');
 const id = process.argv[2];
-const url = 'https://swapi-api.alx-tools.com/api/films/';
-request.get(url + id, function (error, res, body) {
+const url = `https://swapi-api.alx-tools.com/api/films/${id}`;
+request(url, function (error, res, body) {
   if (error) {
     console.log(error);
   }
-  const data = JSON.parse(body);
-  const dd = data.characters;
-  for (const i of dd) {
-    request.get(i, function (error, res, body1) {
-      if (error) {
-        console.log(error);
-      }
-      const data1 = JSON.parse(body1);
-      console.log(data1.name);
-    });
-  }
+  const data = JSON.parse(body).characters;
+  let promises = [];
+  // we can only use `promise.all` to the rescue to make sure the
+  // responses are in the preserved order
+  data.forEach((o, i) => {
+    promises.push(
+        new Promise((resolve, reject) => {
+          return request(o, function (error, res, body1) {
+            if (error) {
+              reject('Error');
+            }
+            resolve(JSON.parse(body1).name)
+          });
+        }),
+    );
+  });
+
+  Promise.all(promises).then(data => {
+    data.forEach((o) => {
+      console.log(o);
+    })
+  })
 });
