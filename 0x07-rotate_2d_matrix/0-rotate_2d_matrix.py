@@ -21,7 +21,9 @@ def rotate_2d_matrix(matrix):
     """
     if type(matrix) == list and len(matrix) > 0 and all(
             map(lambda x: type(x) == list, matrix)):
-        rotated = [list(item[::-1]) for item in zip(*matrix)]
+        rotated = [list(item[::-1]) for item in myzip(*matrix)]
+        # this below, will allow us to overwrite an outside variable from this
+        # inner scope
         for idx, i in enumerate(rotated):
             matrix[idx] = i
     else:
