@@ -8,11 +8,12 @@ def myzip(*iterables):
     away with the builtin zip method. Hahaha
     """
     new_list = []
-    x = len(iterables)
-    n = len(iterables[0])
+    n = len(iterables[0])  # first item is used as a `max` because that's
+    # how `zip` function works
     for i in range(n):
-        new_item = tuple(iterable[i] for iterable in iterables)
-        new_list.append(new_item)
+        new_list.append(
+            tuple(iterable[i] for iterable in iterables)
+        )
     return new_list
 
 
