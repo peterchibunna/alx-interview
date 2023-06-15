@@ -11,32 +11,17 @@ def makeChange(coins: List, total: int) -> int:
     """
     if total <= 0:
         return 0
-    m = len(coins)
-
-    # table[i] will be storing the minimum
-    # number of coins required for i value.
-    # So table[total] will have result
-    table = [0 for i in range(total + 1)]
-
-    # Base case (If given value total is 0)
-    table[0] = 0
-
-    # Initialize all table values as Infinite
-    for i in range(1, total + 1):
-        table[i] = sys.maxsize
-
-    # Compute minimum coins required
-    # for all values from 1 to total
-    for i in range(1, total + 1):
-
-        # Go through all coins smaller than i
-        for j in range(m):
-            if coins[j] <= i:
-                sub_res = table[i - coins[j]]
-                if sub_res != sys.maxsize and sub_res + 1 < table[i]:
-                    table[i] = sub_res + 1
-
-    if table[total] == sys.maxsize:
-        return -1
-
-    return table[total]
+    remaining = total
+    coins_count = 0
+    coin_idx = 0
+    sorted_coins = sorted(coins, reverse=True)
+    n = len(coins)
+    while remaining > 0:
+        if coin_idx >= n:
+            return -1
+        if remaining - sorted_coins[coin_idx] >= 0:
+            remaining -= sorted_coins[coin_idx]
+            coins_count += 1
+        else:
+            coin_idx += 1
+    return coins_count
